@@ -13,8 +13,8 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.958.0",
     "@types/express": "^5.0.6",
-    "aws-sdk": "^2.1693.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",

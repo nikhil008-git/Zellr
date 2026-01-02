@@ -14,7 +14,6 @@ export const getAllFiles = (folderPath: string) => {
     });
     return response;
 }
-
 //here what the function does is it basically gives us the path eventually from going inside the folders or present files from the cloned reposistory stored in output dir 
 
 // this will work only when the folder is in the same directory as the file
