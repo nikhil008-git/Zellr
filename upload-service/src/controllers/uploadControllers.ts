@@ -6,9 +6,15 @@ import type { Request, Response } from "express";
 import path from "path";
 import { getAllFiles } from "../file.js";
 import { uploadFile } from "../aws/aws.js";
+import { createClient } from "redis";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const publisher = createClient();
+await publisher.connect();
+if (!publisher.isOpen) {
+  await publisher.connect();
+}
 const Deploy = async (req: Request, res: Response) => {
   try {
     const { repoUrl } = req.body;
@@ -27,6 +33,10 @@ const Deploy = async (req: Request, res: Response) => {
     );
     //slice function will remove this part users/nraj/zellr/dist/output/122c2/app.js  slice will remove users/nraj/zellr/dist/output + / where 1 was "/"
     //it will eventually give us output/122c2/app.js a clean path to store in r2
+
+    //after files are uploaded to s3 we use publisher below 
+    await new Promise((resolve) => setTimeout(resolve, 5000))
+    publisher.lPush("build-queue", id);
     res.status(200).json({
       message: "file uploaded successfully",
       id: id,
