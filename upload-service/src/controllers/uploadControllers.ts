@@ -12,6 +12,7 @@ const __dirname = path.dirname(__filename);
 
 const publisher = createClient();
 await publisher.connect();
+
 if (!publisher.isOpen) {
   await publisher.connect();
 }
@@ -37,6 +38,9 @@ const Deploy = async (req: Request, res: Response) => {
     //after files are uploaded to s3 we use publisher below 
     await new Promise((resolve) => setTimeout(resolve, 5000))
     publisher.lPush("build-queue", id);
+     // INSERT => SQL
+    // .create => 
+    await publisher.hSet("status", id, "uploaded");
     res.status(200).json({
       message: "file uploaded successfully",
       id: id,

@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import Deploy from "./controllers/uploadControllers.js";
 import dotenv from 'dotenv';
+import Status from "./controllers/statusController.js";
 // import { uploadFile, listBuckets } from './aws/aws.js'
 dotenv.config();
 
@@ -12,7 +13,7 @@ app.use(express.json());
 
 app.post("/upload", Deploy);
 // console.log("start upload")
-
+app.get("/status", Status)
 
 //below block for object store testing purpose!!!!!!!!!!!!!!!!!!!!!!!
 // First, list all available buckets to verify the bucket name
