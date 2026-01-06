@@ -3,7 +3,7 @@ import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { Readable } from "stream";
 
 const s3Client = new S3Client({
-  region: "auto",
+  region: "auto", 
   credentials: {
     accessKeyId: process.env.ACCESS_KEY_ID!,
     secretAccessKey: process.env.SECRET_ACCESS_KEY!,
@@ -11,7 +11,7 @@ const s3Client = new S3Client({
   ...(process.env.ENDPOINT && { endpoint: process.env.ENDPOINT }),
 });
 
-// helper: stream → buffer
+//  stream =>>> buffer
 const streamToBuffer = async (stream: Readable): Promise<Buffer> => {
   const chunks: Uint8Array[] = [];
   for await (const chunk of stream) {

@@ -1,28 +1,35 @@
-import { exec, spawn } from "child_process";
+import { exec } from "child_process";
 import path from "path";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-// Get the project root (go up from dist to project root)
-const projectRoot = path.resolve(__dirname, '..');
+const __dirname = path.dirname(__filename);
 
 export function buildProject(id: string) {
-    return new Promise((resolve) => {
-        const child = exec(`cd ${path.join(process.cwd(), `output/${id}`)} && npm install && npm run build`)
+  return new Promise<void>((resolve, reject) => {
+    const projectPath = path.join(__dirname, `../output/${id}`);
 
-        child.stdout?.on('data', function(data) {
-            console.log('stdout: ' + data);
-        });
-        child.stderr?.on('data', function(data) {
-            console.log('stderr: ' + data);
-        });
+    console.log("Building at:", projectPath);
 
-        child.on('close', function(code) {
-           resolve("")
-        });
+    const child = exec(
+      `cd "${projectPath}" && npm install && npm run build`,
+    );
 
-    })
+    child.stdout?.on("data", (data) => {
+      console.log("stdout:", data.toString());
+    });
 
+    child.stderr?.on("data", (data) => {
+      console.error("stderr:", data.toString());
+    });
+
+    child.on("close", (code) => {
+      if (code === 0) {
+        console.log("Build finished successfully");
+        resolve();
+      } else {
+        reject(new Error(`Build failed with exit code ${code}`));
+      }
+    });
+  });
 }
