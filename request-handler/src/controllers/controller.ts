@@ -1,6 +1,8 @@
 import type { Request, Response } from "express";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { Readable } from "stream";
+import dotenv from "dotenv";  
+dotenv.config();
 
 const s3Client = new S3Client({
   region: "auto", 

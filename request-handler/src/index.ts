@@ -1,6 +1,7 @@
 import express from "express";
 import Subdomain from "./controllers/controller.js";
-
+import dotenv from "dotenv";  
+dotenv.config();
 const app = express();
 
 // Catch ALL requests and forward to S3
