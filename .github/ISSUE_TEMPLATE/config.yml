@@ -1,0 +1,9 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/yourusername/Zellr/discussions
+    about: Ask questions and discuss ideas with other community members
+  - name: 📚 Documentation
+    url: https://github.com/yourusername/Zellr#readme
+    about: Check the README and documentation for more information
+
